@@ -96,5 +96,26 @@ namespace OnTheFlyCompilation
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        protected override void OnActivated(IActivatedEventArgs e)
+        {
+            base.OnActivated(e);
+
+            if (e.Kind == ActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs eventArgs = e as ProtocolActivatedEventArgs;
+                // TODO: Handle URI activation
+                // The received URI is eventArgs.Uri.AbsoluteUri
+
+                Uri uri = eventArgs.Uri;
+                if (uri.Scheme == "open.ontheflycompilation")
+                {
+                    Frame rootFrame = new Frame();
+                    Window.Current.Content = rootFrame;
+                    rootFrame.Navigate(typeof(MainPage), uri.Query);
+                    Window.Current.Activate();
+                }
+            }
+        }
     }
 }

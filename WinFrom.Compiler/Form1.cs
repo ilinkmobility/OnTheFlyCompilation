@@ -16,29 +16,28 @@ namespace WinFrom.Compiler
         public Form1()
         {
             InitializeComponent();
-
-            txtLibraryLocation.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         }
 
-        private void btnCompile_Click(object sender, EventArgs e)
+        private async void btnCompile_Click(object sender, EventArgs e)
         {
-            rtxtResult.Text = CompilerHelper.Instance.Compile(rtxtCode.Text, txtLibraryLocation.Text);
-            //GetAllFiles();
-        }
-
-        public async void GetAllFiles()
-        {
-            StorageFolder appInstalledFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            var files = await appInstalledFolder.GetFilesAsync();
-
-            string fileList = string.Empty;
-
-            foreach (var file in files)
+            if (!string.IsNullOrEmpty(rtxtCode.Text))
             {
-                fileList += file.Name + "\n";
-            }
+                rtxtResult.Text = CompilerHelper.Instance.Compile(rtxtCode.Text);
 
-            rtxtResult.Text = fileList;
+                var files = await CompilerHelper.Instance.GetAllFiles();
+
+                MessageBox.Show("Assembly Count : " + files.Count, "Info", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Please enter valid source code.", "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        private async void btnInvokeUWP_Click(object sender, EventArgs e)
+        {
+            Uri uri = new Uri("open.ontheflycompilation://");
+            await Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }
 }
