@@ -33,9 +33,12 @@
             this.rtxtCode = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rtxtResult = new System.Windows.Forms.RichTextBox();
-            this.btnCompile = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnLoadAssemblies = new System.Windows.Forms.Button();
             this.btnInvokeUWP = new System.Windows.Forms.Button();
+            this.btnCompile = new System.Windows.Forms.Button();
+            this.txtAssemblyName = new System.Windows.Forms.TextBox();
+            this.btnLoadAssembly = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -109,10 +112,53 @@
             this.rtxtResult.TabIndex = 0;
             this.rtxtResult.Text = "";
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 272F));
+            this.tableLayoutPanel2.Controls.Add(this.btnLoadAssemblies, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.btnInvokeUWP, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.btnCompile, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.txtAssemblyName, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnLoadAssembly, 0, 4);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(649, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 6;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(272, 477);
+            this.tableLayoutPanel2.TabIndex = 1;
+            // 
+            // btnLoadAssemblies
+            // 
+            this.btnLoadAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadAssemblies.Location = new System.Drawing.Point(3, 123);
+            this.btnLoadAssemblies.Name = "btnLoadAssemblies";
+            this.btnLoadAssemblies.Size = new System.Drawing.Size(266, 34);
+            this.btnLoadAssemblies.TabIndex = 7;
+            this.btnLoadAssemblies.Text = "Load Assemblies";
+            this.btnLoadAssemblies.UseVisualStyleBackColor = true;
+            // 
+            // btnInvokeUWP
+            // 
+            this.btnInvokeUWP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnInvokeUWP.Location = new System.Drawing.Point(3, 83);
+            this.btnInvokeUWP.Name = "btnInvokeUWP";
+            this.btnInvokeUWP.Size = new System.Drawing.Size(266, 34);
+            this.btnInvokeUWP.TabIndex = 3;
+            this.btnInvokeUWP.Text = "Invoke UWP";
+            this.btnInvokeUWP.UseVisualStyleBackColor = true;
+            this.btnInvokeUWP.Click += new System.EventHandler(this.btnInvokeUWP_Click);
+            // 
             // btnCompile
             // 
             this.btnCompile.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCompile.Location = new System.Drawing.Point(3, 3);
+            this.btnCompile.Location = new System.Drawing.Point(3, 43);
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new System.Drawing.Size(266, 34);
             this.btnCompile.TabIndex = 2;
@@ -120,32 +166,25 @@
             this.btnCompile.UseVisualStyleBackColor = true;
             this.btnCompile.Click += new System.EventHandler(this.btnCompile_Click);
             // 
-            // tableLayoutPanel2
+            // txtAssemblyName
             // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 272F));
-            this.tableLayoutPanel2.Controls.Add(this.btnCompile, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.btnInvokeUWP, 0, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(649, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(272, 477);
-            this.tableLayoutPanel2.TabIndex = 1;
+            this.txtAssemblyName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtAssemblyName.Location = new System.Drawing.Point(3, 3);
+            this.txtAssemblyName.Multiline = true;
+            this.txtAssemblyName.Name = "txtAssemblyName";
+            this.txtAssemblyName.Size = new System.Drawing.Size(266, 34);
+            this.txtAssemblyName.TabIndex = 8;
             // 
-            // btnInvokeUWP
+            // btnLoadAssembly
             // 
-            this.btnInvokeUWP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnInvokeUWP.Location = new System.Drawing.Point(3, 43);
-            this.btnInvokeUWP.Name = "btnInvokeUWP";
-            this.btnInvokeUWP.Size = new System.Drawing.Size(266, 34);
-            this.btnInvokeUWP.TabIndex = 3;
-            this.btnInvokeUWP.Text = "Invoke UWP";
-            this.btnInvokeUWP.UseVisualStyleBackColor = true;
-            this.btnInvokeUWP.Click += new System.EventHandler(this.btnInvokeUWP_Click);
+            this.btnLoadAssembly.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadAssembly.Location = new System.Drawing.Point(3, 163);
+            this.btnLoadAssembly.Name = "btnLoadAssembly";
+            this.btnLoadAssembly.Size = new System.Drawing.Size(266, 34);
+            this.btnLoadAssembly.TabIndex = 9;
+            this.btnLoadAssembly.Text = "Load Assembly";
+            this.btnLoadAssembly.UseVisualStyleBackColor = true;
+            this.btnLoadAssembly.Click += new System.EventHandler(this.btnLoadAssembly_Click);
             // 
             // Form1
             // 
@@ -162,6 +201,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -177,6 +217,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button btnCompile;
         private System.Windows.Forms.Button btnInvokeUWP;
+        private System.Windows.Forms.Button btnLoadAssemblies;
+        private System.Windows.Forms.TextBox txtAssemblyName;
+        private System.Windows.Forms.Button btnLoadAssembly;
     }
 }
 

@@ -3,6 +3,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,14 +35,22 @@ namespace WinFrom.Compiler
                 return instance;
             }
         }
-        public string Compile(string source)
+        public string Compile(string source, string fileName = null)
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-
+            if (fileName == null)
+            {
+                fileName = FilePrefix + "-" + DateTime.Now.ToString("yyyyMMddTHHmmss") + ".dll";
+            }
+            else
+            {
+                fileName = fileName + ".dll";
+            }
+            
             CompilerParameters parameters = new CompilerParameters
             {
                 GenerateExecutable = false,
-                OutputAssembly = localFolder.Path + @"\" + FilePrefix + "-" + DateTime.Now.ToString("yyyyMMddTHHmmss") + ".dll"
+                OutputAssembly = localFolder.Path + @"\" + fileName
             };
 
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, source);
@@ -66,7 +75,7 @@ namespace WinFrom.Compiler
             }
         }
 
-        public async Task<List<string>> GetAllFiles()
+        public async Task<List<string>> GetAllAssemblies()
         {
             var fileList = new List<string>();
 
@@ -78,11 +87,21 @@ namespace WinFrom.Compiler
 
             foreach (var file in files)
             {
-                if(file.Name.StartsWith(FilePrefix))
+                if(file.Name.ToLower().EndsWith(".dll"))
                     fileList.Add(file.Name);
             }
 
             return fileList;
+        }
+
+        public Type GetAssembly(string assemblyName)
+        {
+            StorageFolder assemblyFolder = ApplicationData.Current.LocalFolder;
+            var assemblyPath = assemblyFolder.Path + @"\" + assemblyName + ".dll";
+
+            var assembly = Assembly.LoadFile(assemblyPath);
+
+            return assembly.GetType(assemblyName);
         }
     }
 }

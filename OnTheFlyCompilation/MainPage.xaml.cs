@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -31,13 +34,13 @@ namespace OnTheFlyCompilation
         {
             this.InitializeComponent();
 
-            this.Loaded += async (s, e) =>
-            {
-                var list = await GetAllFiles();
+            //this.Loaded += async (s, e) =>
+            //{
+            //    var list = await GetAllFiles();
 
-                var md = new MessageDialog("File Count : " + list.Count);
-                await md.ShowAsync();
-            };
+            //    var md = new MessageDialog("File Count : " + list.Count);
+            //    await md.ShowAsync();
+            //};
         }
 
         public async Task<List<string>> GetAllFiles()
@@ -52,11 +55,48 @@ namespace OnTheFlyCompilation
 
             foreach (var file in files)
             {
-                if (file.Name.StartsWith(FilePrefix))
+                if (file.Name.ToLower().EndsWith(".dll"))
                     fileList.Add(file.Name);
             }
 
             return fileList;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.Parameter != null)
+            {
+                ShowDialog(e.Parameter.ToString());
+
+                WwwFormUrlDecoder decoder = new WwwFormUrlDecoder(e.Parameter.ToString());
+                try
+                {
+                    var message = decoder.GetFirstValueByName("Hello");
+
+                    ShowDialog(message);
+
+                    dynamic objects = JsonConvert.DeserializeObject(message);
+                    
+                    txtName.Text = objects.Name;
+                }
+                catch (Exception ex)
+                {
+                    ShowDialog(ex.ToString());
+                    Debug.WriteLine("MainPage OnNavigatedTo Error: " + ex.Message);
+                }
+            }
+        }
+
+        public async void ShowDialog(string msg)
+        {
+            var messageDialog = new MessageDialog(msg);
+
+            messageDialog.Commands.Add(new UICommand("Close"));
+
+            // Show the message dialog
+            await messageDialog.ShowAsync();
         }
     }
 }
